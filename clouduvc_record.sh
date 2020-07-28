@@ -92,10 +92,10 @@ do
 
     # Start a new recording
     if [[ rec_duration -gt 0 ]]; then
-        file_name=$(date +%Y-%m-%d_%H-%M-%S).$conf_ext
+        file_name=$(date +%Y-%m-%d_%H-%M-%S)
         echo -e "\rStarting a new recording: $file_name ($rec_duration seconds)"
         guvcview \
-            --video=$conf_path_local/$file_name \
+            --video=$conf_path_local/$file_name.$conf_ext \
             --video_timer=$rec_duration \
             --video_codec=$conf_codec \
             --resolution=$conf_res \

@@ -12,8 +12,9 @@ if [[ $conf_path_cloud != $conf_path_local ]]; then
         find $conf_path_cloud -type f -mmin +$conf_ret_cloud -delete
     fi
 
-    # Copy video to the cloud directory
-    cp $conf_path_local/$file_name $conf_path_cloud/$file_name
+    # Copy video to the cloud directory.
+    # '*' is required because guvcview may increment file name.
+    cp $conf_path_local/$file_name* $conf_path_cloud/
 fi
 
 # Sync cloud storage
