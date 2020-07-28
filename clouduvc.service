@@ -1,0 +1,10 @@
+[Unit]
+Description=Cloud UVC recorder
+
+[Service]
+Type=simple
+ExecStart=/home/pi/clouduvc_record.sh
+User=pi
+
+[Install]
+WantedBy=multi-user.target
