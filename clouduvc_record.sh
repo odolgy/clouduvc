@@ -23,12 +23,12 @@ conf_path_remote=mycloud:media/video
 # Retention period in minutes for local storage.
 # Used to delete files that are too old.
 # Set this value to 0 if you don't want to delete files.
-conf_ret_local=$(expr 45 \* 24 \* 60)
+conf_ret_local=$( (45 \* 24 \* 60) )
 # Retention period in minutes for cloud storage.
 # Used to delete files that are too old.
 # Set this value to 0 if you don't want to delete files.
 # You may leave this field blank if conf_use_cloud == 0.
-conf_ret_cloud=$(expr 8 \* 24 \* 60)
+conf_ret_cloud=$( (8 \* 24 \* 60) )
 # Recording start time in format "HH:MM".
 # Videos will be saved from $conf_start_tm to $conf_end_tm.
 # Set $conf_end_tm equal to $conf_start_tm if you want to record videos all day long.
@@ -36,7 +36,7 @@ conf_start_tm="05:00"
 # Recording end time in format "HH:MM"
 conf_end_tm="23:30"
 # Max duration of one video in seconds
-conf_duration=$(expr 10 \* 60)
+conf_duration=$( (10 \* 60) )
 # Camera resolution in format WIDTHxHEIGHT
 conf_res=320x240
 # FPS for guvcview
@@ -68,7 +68,7 @@ while true
 do
     # Delete too old files from local storage
     if [[ $conf_ret_local -ne 0 ]]; then
-        find $conf_path_local -type f -mmin +$conf_ret_local -delete &
+        find $conf_path_local -type f -mmin +"$conf_ret_local" -delete &
     fi
 
     # Calculate duration of the next recording
@@ -76,14 +76,14 @@ do
     curr_tm_sec=$(date -d "1970-01-01 $curr_tm Z" +%s)
     end_tm_sec=$(date -d "1970-01-01 $conf_end_tm Z" +%s)
     rec_duration=0
-    if [[ $conf_start_tm == $conf_end_tm ]]; then
+    if [[ $conf_start_tm == "$conf_end_tm" ]]; then
         rec_duration=$conf_duration
         elif [[ ($conf_start_tm < $conf_end_tm && (! $curr_tm < $conf_start_tm && ! $curr_tm > $conf_end_tm)) ||
                 ($conf_start_tm > $conf_end_tm && (! $curr_tm < $conf_start_tm || ! $curr_tm > $conf_end_tm)) ]]; then
         if [[ ! $curr_tm > $conf_end_tm ]]; then
-            rec_duration=$(expr $end_tm_sec - $curr_tm_sec + 60)
+            rec_duration=$( ($end_tm_sec - "$curr_tm_sec" + 60) )
         else
-            rec_duration=$(expr 86400 - $curr_tm_sec + $end_tm_sec + 60)
+            rec_duration=$( (86400 - "$curr_tm_sec" + "$end_tm_sec" + 60) )
         fi
         if [[ $rec_duration -gt $conf_duration ]]; then
             rec_duration=$conf_duration
@@ -95,8 +95,8 @@ do
         file_name=$(date +%Y-%m-%d_%H-%M-%S)
         echo -e "\rStarting a new recording: $file_name ($rec_duration seconds)"
         guvcview \
-            --video=$conf_path_local/$file_name.$conf_ext \
-            --video_timer=$rec_duration \
+            --video=$conf_path_local/"$file_name".$conf_ext \
+            --video_timer="$rec_duration" \
             --video_codec=$conf_codec \
             --resolution=$conf_res \
             --device=$conf_device \
@@ -109,10 +109,10 @@ do
         # Run script that copies new video to the cloud storage
         if [[ conf_use_cloud -ne 0 ]]; then
             $conf_path_cloud_sync \
-                $file_name \
+                "$file_name" \
                 $conf_path_local \
                 $conf_path_cloud \
-                $conf_ret_cloud \
+                "$conf_ret_cloud" \
                 $conf_path_remote &
         fi
         # Wait
