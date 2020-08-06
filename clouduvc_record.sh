@@ -23,12 +23,12 @@ conf_path_remote=mycloud:media/video
 # Retention period in minutes for local storage.
 # Used to delete files that are too old.
 # Set this value to 0 if you don't want to delete files.
-conf_ret_local=$( (45 \* 24 \* 60) )
+conf_ret_local=$( (60 \* 24 \* 45) )
 # Retention period in minutes for cloud storage.
 # Used to delete files that are too old.
 # Set this value to 0 if you don't want to delete files.
 # You may leave this field blank if conf_use_cloud == 0.
-conf_ret_cloud=$( (8 \* 24 \* 60) )
+conf_ret_cloud=$( (60 \* 24 \* 8) )
 # Recording start time in format "HH:MM".
 # Videos will be saved from $conf_start_tm to $conf_end_tm.
 # Set $conf_end_tm equal to $conf_start_tm if you want to record videos all day long.
@@ -36,7 +36,7 @@ conf_start_tm="05:00"
 # Recording end time in format "HH:MM"
 conf_end_tm="23:30"
 # Max duration of one video in seconds
-conf_duration=$( (10 \* 60) )
+conf_duration=$( (60 \* 10) )
 # Camera resolution in format WIDTHxHEIGHT
 conf_res=320x240
 # FPS for guvcview
@@ -115,7 +115,7 @@ do
                 "$conf_ret_cloud" \
                 $conf_path_remote &
         fi
-        # Wait
+    # Wait
     else
         sleep 30
     fi
