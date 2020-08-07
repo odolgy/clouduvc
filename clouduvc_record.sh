@@ -116,6 +116,8 @@ do
                 -s $conf_res \
                 -c:v $conf_codec_ffmpeg \
                 -preset ultrafast \
+                -loglevel error \
+                -hide_banner \
                 "$full_file_name"
         else
             guvcview \
