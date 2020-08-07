@@ -90,8 +90,8 @@ do
     rec_duration=0
     if [[ $conf_start_tm == "$conf_end_tm" ]]; then
         rec_duration=$conf_duration
-        elif [[ ($conf_start_tm < $conf_end_tm && (! $curr_tm < $conf_start_tm && ! $curr_tm > $conf_end_tm)) ||
-                ($conf_start_tm > $conf_end_tm && (! $curr_tm < $conf_start_tm || ! $curr_tm > $conf_end_tm)) ]]; then
+    elif [[ ($conf_start_tm < $conf_end_tm && (! $curr_tm < $conf_start_tm && ! $curr_tm > $conf_end_tm)) ||
+            ($conf_start_tm > $conf_end_tm && (! $curr_tm < $conf_start_tm || ! $curr_tm > $conf_end_tm)) ]]; then
         if [[ ! $curr_tm > $conf_end_tm ]]; then
             rec_duration=$(expr "$end_tm_sec" - "$curr_tm_sec" + 60)
         else
@@ -103,7 +103,7 @@ do
     fi
 
     # Start a new recording
-    if [[ rec_duration -gt 0 ]]; then
+    if [[ rec_duration -gt 0 && -e "$conf_device" ]]; then
         file_name=$(date +%Y-%m-%d_%H-%M-%S)
         echo -e "\rStarting a new recording: $file_name ($rec_duration seconds)"
         full_file_name=$conf_path_local/"$file_name".$conf_ext
