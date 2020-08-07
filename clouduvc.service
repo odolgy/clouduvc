@@ -1,5 +1,6 @@
 [Unit]
 Description=Cloud UVC recorder
+RequiresMountsFor=/mnt/storage
 
 [Service]
 Type=simple
