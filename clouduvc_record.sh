@@ -70,6 +70,16 @@ if [[ conf_use_cloud -ne 0 && "$(which rclone)" == "" ]]; then
     exit 1
 fi
 
+# Check configuration
+if [[ ! ($conf_start_tm =~ ^[0-2]{1}[0-9]{1}:[0-5]{1}[0-9]{1}$ && $conf_start_tm < "24:00") ]]; then
+    echo "Bad start time format"
+    exit 1
+fi
+if [[ ! ($conf_end_tm =~ ^[0-2]{1}[0-9]{1}:[0-5]{1}[0-9]{1}$ && $conf_end_tm < "24:00") ]]; then
+    echo "Bad end time format"
+    exit 1
+fi
+
 # Create output folders
 mkdir -p $conf_path_local
 if [[ conf_use_cloud -ne 0 ]]; then
