@@ -46,6 +46,8 @@ conf_fps=10
 conf_use_ffmpeg=0
 # Codec for ffmpeg (see available options for ffmpeg -c:v param)
 conf_codec_ffmpeg=libx264
+# Additional options for ffmpeg encoding
+conf_ffmpeg_out_options="-preset veryfast -pix_fmt yuv420p"
 # Codec for guvcview (see available options for guvcview --video_codec param)
 conf_codec_guvcview=mp43
 # Output video file extension
@@ -125,7 +127,7 @@ do
                 -r $conf_fps \
                 -s $conf_res \
                 -c:v $conf_codec_ffmpeg \
-                -preset ultrafast \
+                $conf_ffmpeg_out_options \
                 -loglevel error \
                 -hide_banner \
                 "$full_file_name"
