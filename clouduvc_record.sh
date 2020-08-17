@@ -6,12 +6,10 @@ conf_device=/dev/video0
 # Cloud use flag.
 # Set this parameter to 0 if you don't want to copy videos to the cloud storage.
 conf_use_cloud=1
-# Directory for local storage.
+# Directory for local storage which contains all video files.
 conf_path_local=/mnt/storage/video_local
-# Directory for cloud storage.
-# If you don't want to have a separate directory for cloud storage,
-# set $conf_path_cloud equal to $conf_path_local. In this case
-# all videos will be saved to the cloud and $conf_ret_cloud will not be used.
+# Directory for cloud storage which contains symlinks to video files from 
+# $conf_path_local. 
 # You may leave this field blank if conf_use_cloud == 0.
 conf_path_cloud=/mnt/storage/video_cloud
 # Path for clouduvc_sync.sh script.
@@ -25,7 +23,7 @@ conf_path_remote=mycloud:media/video
 # Set this value to 0 if you don't want to delete files.
 conf_ret_local=$(expr 60 \* 24 \* 45)
 # Retention period in minutes for cloud storage.
-# Used to delete files that are too old.
+# Used to delete files (symlinks) that are too old.
 # Set this value to 0 if you don't want to delete files.
 # You may leave this field blank if conf_use_cloud == 0.
 conf_ret_cloud=$(expr 60 \* 24 \* 8)

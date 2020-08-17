@@ -6,16 +6,14 @@ conf_path_cloud=$3
 conf_ret_cloud=$4
 conf_path_remote=$5
 
-if [[ $conf_path_cloud != "$conf_path_local" ]]; then
-    # Delete too old files from cloud storage
-    if [[ $conf_ret_cloud -ne 0 ]]; then
-        find "$conf_path_cloud" -type f -mmin +"$conf_ret_cloud" -delete
-    fi
-
-    # Copy video to the cloud directory.
-    # '*' is required because guvcview may increment file name.
-    cp "$conf_path_local"/"$file_name"* "$conf_path_cloud"/
+# Delete too old files from cloud storage
+if [[ $conf_ret_cloud -ne 0 ]]; then
+    find "$conf_path_cloud" -type l -mmin +"$conf_ret_cloud" -delete
 fi
 
+# Create a symlink to the video file in the cloud directory.
+# '*' is required because guvcview may increment file name.
+ln -s "$(readlink -f "$conf_path_local"/"$file_name"*)" "$conf_path_cloud"/"$file_name"
+
 # Sync cloud storage
-rclone sync "$conf_path_cloud" "$conf_path_remote"
+rclone --copy-links --delete-before sync "$conf_path_cloud" "$conf_path_remote"
