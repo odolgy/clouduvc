@@ -5,6 +5,7 @@ RequiresMountsFor=/mnt/storage
 [Service]
 Type=simple
 ExecStart=/home/pi/clouduvc_record.sh
+WorkingDirectory=/home/pi
 User=pi
 
 [Install]
