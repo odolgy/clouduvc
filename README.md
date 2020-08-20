@@ -1,7 +1,7 @@
 # Clouduvc
 
-Clouduvc helps to organise the simplest video surveillance system based on:
-- Linux powered device, such as Raspberry PI;
+Clouduvc is used to create the simplest video surveillance system based on:
+- Linux powered device, such as Raspberry Pi;
 - webcam; 
 - cloud storage, e.g. Google Drive (optional). 
 
