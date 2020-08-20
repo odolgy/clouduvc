@@ -7,7 +7,7 @@ conf_ret_cloud=$4
 conf_path_remote=$5
 
 # Delete too old files from cloud storage
-if [[ $conf_ret_cloud -ne 0 ]]; then
+if [[ conf_ret_cloud -ne 0 ]]; then
     find "$conf_path_cloud" -type l -mmin +"$conf_ret_cloud" -delete
 fi
 
