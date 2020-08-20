@@ -1,11 +1,15 @@
 [Unit]
 Description=Cloud UVC recorder
+# Mount point for video directory
 RequiresMountsFor=/mnt/storage
 
 [Service]
 Type=simple
-ExecStart=/home/pi/clouduvc_record.sh
-WorkingDirectory=/home/pi
+ExecStart=/home/pi/clouduvc/clouduvc_record.sh
+# Directory with clouduvc scripts
+WorkingDirectory=/home/pi/clouduvc
+# When using guvcview, you should run "clouduvc_record.sh" as a user who has a home directory, 
+# because guvcview stores configuration files there. Otherwise, you can get a Segmentation Fault.
 User=pi
 
 [Install]
