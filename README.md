@@ -57,7 +57,6 @@ $ sudo cp clouduvc.service /etc/systemd/system/
 $ sudo editor /etc/systemd/system/clouduvc.service
 $ sudo systemctl enable clouduvc.service
 ```
-When using guvcview, you should run "clouduvc_record.sh" as a user who has a home directory, because guvcview uses it to save config files. Otherwise, you can get a Segmentation Fault.
 
 8. Check that everything works:
 ``` sh
