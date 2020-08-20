@@ -7,8 +7,8 @@ conf_device=/dev/video0
 conf_use_cloud=1
 # Directory for local storage which contains all video files.
 conf_path_local=/mnt/storage/video_local
-# Directory for cloud storage which contains symlinks to video files from 
-# $conf_path_local. 
+# Directory for cloud storage which contains symlinks to video files from
+# $conf_path_local.
 # You may leave this field blank if conf_use_cloud == 0.
 conf_path_cloud=/mnt/storage/video_cloud
 # Remote path for rclone in format cloud:path.
