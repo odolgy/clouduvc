@@ -15,5 +15,8 @@ fi
 # '*' is required because guvcview may increment file name.
 ln -s "$(readlink -f "$conf_path_local"/"$file_name"*)" "$conf_path_cloud"/"$file_name"
 
+# Empty trash
+rclone cleanup "$conf_path_remote"
+
 # Sync cloud storage
 rclone --copy-links --delete-before sync "$conf_path_cloud" "$conf_path_remote"
