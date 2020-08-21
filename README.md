@@ -45,7 +45,7 @@ $ editor clouduvc_config.sh
 ```
 5. Run and check that everything works:  
 ``` sh
- $ ./clouduvc_record.sh
+$ ./clouduvc_record.sh
 ```
 6. You can check output video resolution, fps and other parameters using [ffprobe](https://ffmpeg.org/ffprobe.html):
 ``` sh
