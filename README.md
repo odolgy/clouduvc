@@ -49,7 +49,7 @@ $ ./clouduvc_record.sh
 ```
 6. You can check output video resolution, fps and other parameters using [ffprobe](https://ffmpeg.org/ffprobe.html):
 ``` sh
-$ ffprobe video_file.avi 
+$ ffprobe -hide_banner video_file.avi 
 ```
 7. Configure autorun. Example for distributions with systemd:
 ``` sh
