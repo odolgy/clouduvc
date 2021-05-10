@@ -1,6 +1,6 @@
 [Unit]
 Description=Cloud UVC recorder
-# Mount point for video directory
+# Mount point for directory with videos and images
 RequiresMountsFor=/mnt/storage
 
 [Service]

@@ -11,7 +11,7 @@ if [[ conf_ret_cloud -ne 0 ]]; then
     find "$conf_path_cloud" -type l -mmin +"$conf_ret_cloud" -delete
 fi
 
-# Create a symlink to the video file in the cloud directory.
+# Create a symlink to the file in the cloud directory.
 # '*' is required because guvcview may increment file name.
 ln -s "$(readlink -f "$conf_path_local"/"$file_name"*)" "$conf_path_cloud"/"$file_name"
 

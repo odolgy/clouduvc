@@ -75,35 +75,63 @@ do
     # Start a new recording
     if [[ rec_duration -gt 0 && -e "$conf_device" ]]; then
         file_name=$(date +%Y-%m-%d_%H-%M-%S)
-        echo -e "\rStarting a new recording: $file_name ($rec_duration seconds)"
-        full_file_name=$conf_path_local/"$file_name"."$conf_ext"
+        echo -e "\rStarting a new recording: $file_name ($rec_duration sec)"
 
-        if [[ conf_use_ffmpeg -ne 0 ]]; then
-            ffmpeg -y \
-                -i "$conf_device" \
-                -t "$rec_duration" \
-                -r "$conf_fps" \
-                -s "$conf_res" \
-                -c:v "$conf_codec_ffmpeg" \
-                $conf_ffmpeg_out_options \
-                -loglevel error \
-                -hide_banner \
-                "$full_file_name"
+        if [[ conf_video_mode -ne 0 ]]; then
+            full_file_name=$conf_path_local/"$file_name"."$conf_ext_video"
+
+            if [[ conf_use_ffmpeg -ne 0 ]]; then
+                ffmpeg -y \
+                    -i "$conf_device" \
+                    -t "$rec_duration" \
+                    -r "$conf_fps" \
+                    -s "$conf_res" \
+                    -c:v "$conf_codec_ffmpeg" \
+                    $conf_ffmpeg_out_options \
+                    -loglevel error \
+                    -hide_banner \
+                    "$full_file_name"
+            else
+                guvcview \
+                    --video="$full_file_name" \
+                    --video_timer="$rec_duration" \
+                    --video_codec="$conf_codec_guvcview" \
+                    --resolution="$conf_res" \
+                    --device="$conf_device" \
+                    --fps="$conf_fps" \
+                    --gui=none \
+                    --audio=none \
+                    --render=none \
+                    --exit_on_term
+            fi
         else
-            guvcview \
-                --video="$full_file_name" \
-                --video_timer="$rec_duration" \
-                --video_codec="$conf_codec_guvcview" \
-                --resolution="$conf_res" \
-                --device="$conf_device" \
-                --fps="$conf_fps" \
-                --gui=none \
-                --audio=none \
-                --render=none \
-                --exit_on_term
+            full_file_name=$conf_path_local/"$file_name"."$conf_ext_image"
+
+            if [[ conf_use_ffmpeg -ne 0 ]]; then
+                ffmpeg -y \
+                    -i "$conf_device" \
+                    -s "$conf_res" \
+                    -frames:v 1 \
+                    -loglevel error \
+                    -hide_banner \
+                    "$full_file_name"
+            else
+                guvcview \
+                    --image="$full_file_name" \
+                    --resolution="$conf_res" \
+                    --device="$conf_device" \
+                    --photo_timer=1 \
+                    --photo_total=1 \
+                    --gui=none \
+                    --audio=none \
+                    --render=none \
+                    --exit_on_term
+            fi
+
+            sleep $rec_duration
         fi
 
-        # Run script that copies new video to the cloud storage
+        # Run script that copies new file to the cloud storage
         if [[ conf_use_cloud -ne 0 ]]; then
             ./clouduvc_sync.sh \
                 "$file_name" \

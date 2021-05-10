@@ -2,12 +2,12 @@
 
 Clouduvc is used to create the simplest video surveillance system based on:
 - Linux powered device, such as Raspberry Pi;
-- webcam; 
-- cloud storage, e.g. Google Drive (optional). 
+- webcam;
+- cloud storage, e.g. Google Drive (optional).
 
 How it works:
-* Clouduvc records videos of a fixed length and saves them to a local storage (such as an external hard drive). Video recording is performed daily at a certain period of time or around the clock. 
-* Optionally, the latest video files may be uploaded to the cloud storage. 
+* Clouduvc records videos of a fixed length or takes photos and saves them to a local storage (such as an external hard drive). Recording is performed daily at a certain period of time or around the clock.
+* Optionally, the latest files are uploaded to the cloud storage.
 * Old files are removed from the local and the cloud storages according to the configured retention periods.
 
 ## Dependencies
