@@ -21,13 +21,13 @@ readonly conf_path_remote=mycloud:media/video
 # Used to delete files that are too old.
 # Before changing the value, please check that the local storage is large enough.
 # When set to false files are not deleted.
-readonly conf_ret_local=$(expr 60 \* 24 \* 45)
+readonly conf_ret_local=$((60 * 24 * 45))
 # Retention period in minutes for cloud storage.
 # Used to delete files (symlinks) that are too old.
 # Before changing the value, please check that the cloud storage is large enough.
 # When set to false files are not deleted.
 # May be left blank if $conf_use_cloud is false.
-readonly conf_ret_cloud=$(expr 60 \* 36)
+readonly conf_ret_cloud=$((60 * 36))
 # Recording start time in format "HH:MM".
 # Videos and images will be saved from $conf_start_tm to $conf_end_tm.
 # When $conf_end_tm equals to $conf_start_tm the recording continues all day.
@@ -35,7 +35,7 @@ readonly conf_start_tm="05:00"
 # Recording end time in format "HH:MM"
 readonly conf_end_tm="22:30"
 # Max duration of one video or delay between two images in seconds
-readonly conf_duration=$(expr 60 \* 10)
+readonly conf_duration=$((60 * 10))
 # Camera resolution in format WIDTHxHEIGHT
 readonly conf_res=320x240
 # Video FPS

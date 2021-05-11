@@ -63,9 +63,9 @@ do
     elif [[ ($conf_start_tm < $conf_end_tm && (! $curr_tm < $conf_start_tm && ! $curr_tm > $conf_end_tm)) ||
             ($conf_start_tm > $conf_end_tm && (! $curr_tm < $conf_start_tm || ! $curr_tm > $conf_end_tm)) ]]; then
         if [[ ! $curr_tm > $conf_end_tm ]]; then
-            rec_duration=$(expr "$end_tm_sec" - "$curr_tm_sec" + 60)
+            rec_duration=$(("$end_tm_sec" - "$curr_tm_sec" + 60))
         else
-            rec_duration=$(expr 86400 - "$curr_tm_sec" + "$end_tm_sec" + 60)
+            rec_duration=$((86400 - "$curr_tm_sec" + "$end_tm_sec" + 60))
         fi
         if [[ $rec_duration -gt $conf_duration ]]; then
             rec_duration=$conf_duration
@@ -132,7 +132,7 @@ do
                     --exit_on_term
             fi
 
-            sleep $rec_duration
+            sleep "$rec_duration"
         fi
 
         # Run script that copies new file to the cloud storage
