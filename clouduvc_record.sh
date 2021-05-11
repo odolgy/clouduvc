@@ -18,7 +18,7 @@ if [[ ! ($conf_end_tm =~ ^[0-2]{1}[0-9]{1}:[0-5]{1}[0-9]{1}$ && $conf_end_tm < "
 fi
 
 # Check dependencies
-if [[ conf_use_ffmpeg -ne 0 ]]; then
+if [[ "$conf_use_ffmpeg" = true ]]; then
     if [[ "$(which ffmpeg)" == "" ]]; then
         echo "Please, install ffmpeg."
         exit 1
@@ -29,7 +29,7 @@ else
         exit 1
     fi
 fi
-if [[ conf_use_cloud -ne 0 ]]; then
+if [[ "$conf_use_cloud" = true ]]; then
     if [[ "$(which rclone)" == "" ]]; then
         echo "Please, install rclone."
         exit 1
@@ -42,7 +42,7 @@ fi
 
 # Create output folders
 mkdir -p "$conf_path_local"
-if [[ conf_use_cloud -ne 0 ]]; then
+if [[ "$conf_use_cloud" = true ]]; then
     mkdir -p "$conf_path_cloud"
 fi
 
@@ -77,10 +77,10 @@ do
         file_name=$(date +%Y-%m-%d_%H-%M-%S)
         echo -e "\rStarting a new recording: $file_name ($rec_duration sec)"
 
-        if [[ conf_video_mode -ne 0 ]]; then
+        if [[ "$conf_video_mode" = true ]]; then
             full_file_name=$conf_path_local/"$file_name"."$conf_ext_video"
 
-            if [[ conf_use_ffmpeg -ne 0 ]]; then
+            if [[ "$conf_use_ffmpeg" = true ]]; then
                 ffmpeg -y \
                     -i "$conf_device" \
                     -t "$rec_duration" \
@@ -107,7 +107,7 @@ do
         else
             full_file_name=$conf_path_local/"$file_name"."$conf_ext_image"
 
-            if [[ conf_use_ffmpeg -ne 0 ]]; then
+            if [[ "$conf_use_ffmpeg" = true ]]; then
                 ffmpeg -y \
                     -i "$conf_device" \
                     -s "$conf_res" \
@@ -132,7 +132,7 @@ do
         fi
 
         # Run script that copies new file to the cloud storage
-        if [[ conf_use_cloud -ne 0 ]]; then
+        if [[ "$conf_use_cloud" = true ]]; then
             ./clouduvc_sync.sh \
                 "$file_name" \
                 "$conf_path_local" \
