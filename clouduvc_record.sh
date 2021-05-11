@@ -74,12 +74,18 @@ do
 
     # Start a new recording
     if [[ rec_duration -gt 0 && -e "$conf_device" ]]; then
+        # Generate file name
         file_name=$(date +%Y-%m-%d_%H-%M-%S)
-        echo -e "\rStarting a new recording: $file_name ($rec_duration sec)"
+        if [[ "$conf_video_mode" = true ]]; then
+            file_name_ext="$file_name"."$conf_ext_video"
+        else
+            file_name_ext="$file_name"."$conf_ext_image"
+        fi
+        full_file_name=$conf_path_local/"$file_name_ext"
+
+        echo -e "\rStarting a new recording: $file_name_ext ($rec_duration sec)"
 
         if [[ "$conf_video_mode" = true ]]; then
-            full_file_name=$conf_path_local/"$file_name"."$conf_ext_video"
-
             if [[ "$conf_use_ffmpeg" = true ]]; then
                 ffmpeg -y \
                     -i "$conf_device" \
@@ -105,8 +111,6 @@ do
                     --exit_on_term
             fi
         else
-            full_file_name=$conf_path_local/"$file_name"."$conf_ext_image"
-
             if [[ "$conf_use_ffmpeg" = true ]]; then
                 ffmpeg -y \
                     -i "$conf_device" \
